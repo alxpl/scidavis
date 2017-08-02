@@ -1,0 +1,59 @@
+diff --git a/config.pri b/config.pri
+index 1636456..9b461e9 100644
+--- a/config.pri
++++ b/config.pri
+@@ -207,7 +207,7 @@ DEFINES         += SCRIPTING_DIALOG
+ 	DEFINES += DOWNLOAD_LINKS
+ }
+ 
+-### support for Origin OPJ import using liborigin2
++### support for Origin OPJ import using liborigin3
+ mxe|osx_dist|aegis {
+ CONFIG+=liborigin
+ }
+@@ -308,6 +308,10 @@ contains(PRESET, linux_package) {
+ 	LIBS         += -lgsl -lgslcblas
+ 	LIBS         += -lmuparser 
+ 
++    liborigin {
++        INCLUDEPATH  += /usr/include/liborigin3
++        LIBS         += -lorigin3
++    }
+ }
+ 
+ contains(PRESET, self_contained) {
+@@ -388,4 +392,3 @@ exists(/usr/bin/lupdate-qt4) {
+ 	LUPDATE_BIN = lupdate
+ 	LRELEASE_BIN = lrelease
+ }
+-
+diff --git a/scidavis.pro b/scidavis.pro
+index 7f490df..704c5ff 100644
+--- a/scidavis.pro
++++ b/scidavis.pro
+@@ -19,9 +19,6 @@ TEMPLATE = subdirs
+ mxe|osx_dist {CONFIG += liborigin}
+ aegis {CONFIG += liborigin test}
+ 
+-# liborigin must come first, if it exists
+-liborigin {SUBDIRS = 3rdparty/liborigin}
+-
+ SUBDIRS += libscidavis scidavis 
+ 
+ test {SUBDIRS += test}
+diff --git a/scidavis/scidavis.pro b/scidavis/scidavis.pro
+index 6e31e65..d19796b 100644
+--- a/scidavis/scidavis.pro
++++ b/scidavis/scidavis.pro
+@@ -34,11 +34,6 @@ INSTALLS        += translationfiles
+ ### icon file (for Windows installer)
+ win32:INSTALLS  += win_icon
+ 
+-liborigin {
+-  LIBS += ../3rdparty/liborigin/liborigin.a
+-  POST_TARGETDEPS += ../3rdparty/liborigin/liborigin.a
+-}
+-
+ ########### Future code backported from the aspect framework ##################
+ DEFINES += LEGACY_CODE_0_2_x
+ INCLUDEPATH += ../libscidavis/src/future

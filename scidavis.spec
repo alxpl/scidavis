@@ -26,13 +26,13 @@ BuildRequires:  qwtplot3d-qt4-devel
 BuildRequires:  sip-devel
 BuildRequires:  zlib-devel
 
-Requires:       PyQt4       
+Requires:       PyQt4 
 
 
 %description
-SciDAVis is a free interactive application aimed at data analysis and 
+SciDAVis is a free interactive application aimed at data analysis and
 publication-quality plotting. It combines a shallow learning curve and
-an intuitive, easy-to-use graphical user interface with powerful 
+an intuitive, easy-to-use graphical user interface with powerful
 features such as scriptability and extensibility.
 
 
@@ -75,7 +75,7 @@ done
 # Plugins are unversioned .so files
 cd %{buildroot}%{_libdir}/%{name}/plugins
 for plugin in `ls *.so`
-do 
+do
     mv ${plugin}.%{pluginversion} ${plugin}
     rm -f ${plugin}.*
 done
@@ -162,7 +162,7 @@ fi
 - Rebuild for boost 1.57.0
 
 * Fri Jan 02 2015 Christian Dersch <lupinix@fedoraproject.org> - 1.D8-7
-- added patch to fix http://sourceforge.net/p/scidavis/svn/1458/ 
+- added patch to fix http://sourceforge.net/p/scidavis/svn/1458/
 
 * Sat Dec 20 2014 Christian Dersch <lupinix@fedoraproject.org> - 1.D8-6
 - added missing find_lang macro
@@ -185,4 +185,4 @@ fi
 
 * Mon Aug  4 2014 Christian Dersch <lupinix@fedoraproject.org> - 1.D8-1
 - initial spec
-- inspired by old scidavis spec http://pkgs.fedoraproject.org/cgit/scidavis.git/tree/scidavis.spec?h=f15 
+- inspired by old scidavis spec http://pkgs.fedoraproject.org/cgit/scidavis.git/tree/scidavis.spec?h=f15

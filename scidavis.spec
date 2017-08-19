@@ -1,8 +1,8 @@
 %global pluginversion 1.0.0
 
 Name:           scidavis
-Version:        1.19
-Release:        2%{?dist}
+Version:        1.21
+Release:        1%{?dist}
 Summary:        Application for Scientific Data Analysis and Visualization
 
 License:        GPLv2+ and GPLv3+
@@ -109,6 +109,7 @@ fi
 %files -f %{name}.lang
 %doc CHANGES
 %license gpl.txt LICENSE license.rtf
+%{_mandir}/man1/scidavis.1*
 %{_bindir}/*
 %{_docdir}/*
 %{_libdir}/%{name}
@@ -121,6 +122,9 @@ fi
 
 
 %changelog
+* Sat Aug 19 2017 Alexander Ploumistos <alexpl@fedoraproject.org> - 1.21-1
+- New version
+
 * Tue Aug 01 2017 Alexander Ploumistos <alexpl@fedoraproject.org> - 1.19-2
 - Enable ARM builds - patch by Miquel Garriga <gbmiquel.at.gmail.com>
 - Clean up spec file

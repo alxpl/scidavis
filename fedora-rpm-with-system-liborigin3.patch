@@ -45,15 +45,20 @@ diff --git a/scidavis/scidavis.pro b/scidavis/scidavis.pro
 index 6e31e65..d19796b 100644
 --- a/scidavis/scidavis.pro
 +++ b/scidavis/scidavis.pro
-@@ -34,11 +34,6 @@ INSTALLS        += translationfiles
+@@ -34,15 +34,6 @@
  ### icon file (for Windows installer)
  win32:INSTALLS  += win_icon
  
 -liborigin {
--  LIBS += ../3rdparty/liborigin/liborigin.a
--  POST_TARGETDEPS += ../3rdparty/liborigin/liborigin.a
+-  LIBORIGINDIR=../3rdparty/liborigin
+-  win32 {
+-    Debug: LIBORIGINDIR=$${LIBORIGINDIR}/debug
+-    Release: LIBORIGINDIR=$${LIBORIGINDIR}/release
+-  }
+-  LIBS += $${LIBORIGINDIR}/liborigin.a
+-  POST_TARGETDEPS += $${LIBORIGINDIR}/liborigin.a
 -}
--
+ 
  ########### Future code backported from the aspect framework ##################
  DEFINES += LEGACY_CODE_0_2_x
  INCLUDEPATH += ../libscidavis/src/future

@@ -2,20 +2,22 @@
 
 Name:           scidavis
 Version:        1.21
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application for Scientific Data Analysis and Visualization
 
 License:        GPLv2+ and GPLv3+
 URL:            http://scidavis.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # Patches by Miquel Garriga <gbmiquel.at.gmail.com>
-Patch0:         fedora-rpm-with-system-liborigin3.patch
-Patch1:         armv7hl-build.patch
+Patch0:         armv7hl-build.patch
+# enable after liborigin-3.0.0 release
+#Patch1:         fedora-rpm-with-system-liborigin3.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  doxygen
 BuildRequires:  gsl-devel
-BuildRequires:  liborigin3-devel
+# enable after liborigin-3.0.0 release
+#BuildRequires:  liborigin3-devel
 BuildRequires:  muParser-devel
 BuildRequires:  PyQt4-devel
 BuildRequires:  python2-devel
@@ -39,8 +41,9 @@ features such as scriptability and extensibility.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1
-%patch1 -p1
-rm -rf 3rdparty/liborigin
+# enable after liborigin-3.0.0 release
+#%patch1 -p1
+#rm -rf 3rdparty/liborigin
 
 
 %build
@@ -55,22 +58,20 @@ make %{?_smp_mflags}
 %install
 make INSTALL_ROOT="%{buildroot}" install
 
-%{__mkdir_p} %{buildroot}%{_datadir}/{%{name}/translations,applications,mime/packages,mimelnk/application}
-%{__cp} -p %{name}/translations/*.qm %{buildroot}%{_datadir}/%{name}/translations/
+mkdir -p %{buildroot}%{_datadir}/{%{name}/translations,applications,mime/packages}
+cp -p %{name}/translations/*.qm %{buildroot}%{_datadir}/%{name}/translations/
 %find_lang %{name} --with-qt
-%{__cp} -p %{name}/%{name}.desktop %{buildroot}/%{_datadir}/applications/
-%{__cp} -p %{name}/%{name}.xml %{buildroot}%{_datadir}/mime/packages/
-%{__cp} -p %{name}/x-sciprj.desktop %{buildroot}%{_datadir}/mimelnk/application/
 
-for s in 16 22 32 48 64 128; do
-   %{__mkdir_p} %{buildroot}%{_datadir}/icons/hicolor/${s}x${s}/apps
-   %{__cp} -p %{name}/icons/hicolor-${s}/%{name}.png %{buildroot}%{_datadir}/icons/hicolor/${s}x${s}/apps/%{name}.png
-done
+# KDE3 remnant - to be reported upstream
+rm -rf %{buildroot}%{_datadir}/mimelnk/
 
-for s in 16 22 32; do
-   %{__mkdir_p} %{buildroot}%{_datadir}/icons/locolor/${s}x${s}/apps
-   %{__cp} -p %{name}/icons/locolor-${s}/%{name}.png %{buildroot}%{_datadir}/icons/locolor/${s}x${s}/apps/%{name}.png
-done
+# man page gets installed under scidavis.1/ subdirectory - to be reported upstream
+rm -rf %{buildroot}%{_mandir}/man1/%{name}.1
+cp -p %{name}/%{name}.1 %{buildroot}%{_mandir}/man1/
+
+# gpl.txt is copied over by the license macro
+rm -f %{buildroot}%{_docdir}/%{name}/gpl.txt
+
 
 # Plugins are unversioned .so files
 cd %{buildroot}%{_libdir}/%{name}/plugins
@@ -109,19 +110,24 @@ fi
 %files -f %{name}.lang
 %doc CHANGES
 %license gpl.txt LICENSE license.rtf
-%{_mandir}/man1/scidavis.1*
-%{_bindir}/*
-%{_docdir}/*
+%{_mandir}/man1/%{name}.1*
+%{_docdir}/%{name}
+%{_bindir}/%{name}
 %{_libdir}/%{name}
 %{_datadir}/%{name}
-%{_datadir}/applications/*
-%{_datadir}/mime/packages/*.xml
-%{_datadir}/mimelnk/application/x-sciprj.desktop
-%{_datadir}/icons/hicolor/*/apps/scidavis.*
-%{_datadir}/icons/locolor/*/apps/scidavis.*
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/mime/packages/%{name}.xml
+%{_datadir}/icons/hicolor/*/apps/%{name}.*
+%{_datadir}/icons/locolor/*/apps/%{name}.*
 
 
 %changelog
+* Mon Sep 11 2017 Alexander Ploumistos <alexpl@fedoraproject.org> - 1.21-2
+- Hold off unbundling until liborigin-3.0.0 official release
+- Remove x-sciprj.desktop and /usr/share/mimelnk/application/
+- Fix manpage location
+- Remove redundant code from the spec file
+
 * Sat Aug 19 2017 Alexander Ploumistos <alexpl@fedoraproject.org> - 1.21-1
 - New version
 

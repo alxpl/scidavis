@@ -33,8 +33,8 @@ BuildRequires:  qwtplot3d-qt4-devel
 BuildRequires:  sip-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libappstream-glib
-# required for the tests
-BuildRequires:  xorg-x11-server-Xvfb
+# required for the tests, enable when building locally
+#BuildRequires:  xorg-x11-server-Xvfb
 
 Requires:       PyQt4
 Requires:       hicolor-icon-theme

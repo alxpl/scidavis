@@ -1,0 +1,25 @@
+--- config.orig.pri	2017-08-09 05:19:02.000000000 +0300
++++ config.pri	2017-09-14 02:27:06.209599352 +0300
+@@ -120,9 +120,9 @@
+ 		### directory specified here or somewhere else in the python path (sys.path) where "import" can find it
+ 
+ 		### where scidavisrc.py is searched for at runtime
+-		pythonconfig.path = "$$INSTALLBASE/../etc"
++		pythonconfig.path = "$$INSTALLBASE/..$$QMAKE_LIBDIR_QT/python2.7/site-packages/scidavis"
+ 		### where the scidavisUtil python module is searched for at runtime
+-		pythonutils.path = "$$INSTALLBASE/share/scidavis"
++		pythonutils.path = "$$INSTALLBASE/..$$QMAKE_LIBDIR_QT/python2.7/site-packages/scidavis"
+ 
+ 		### where plugins are expected by default
+ 		plugins.path = "$$INSTALLBASE/lib/scidavis/plugins"
+@@ -282,8 +282,8 @@
+         exists (/usr/include/qwt-qt4) {INCLUDEPATH+=/usr/include/qwt-qt4}
+ 	exists(/usr/include/qwt5-qt4) {INCLUDEPATH+=/usr/include/qwt5-qt4}
+ 
+-        system (ls /usr/lib*/libqwt5.so) {
+-           LIBS+=-lqwt5
++        system (ls /usr/lib*/libqwt5-qt4.so) {
++           LIBS+=-lqwt5-qt4
+         } else {
+            system (ls /usr/lib*/libqwt5-qt4.so) {
+               LIBS+=-lqwt5-qt4

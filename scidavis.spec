@@ -2,10 +2,10 @@
 
 Name:           scidavis
 Version:        1.21
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Application for Scientific Data Analysis and Visualization
 
-License:        GPLv2+ and GPLv3+
+License:        GPLv3+
 URL:            http://scidavis.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # To be removed after 1.22 release
@@ -38,6 +38,7 @@ BuildRequires:  libappstream-glib
 
 Requires:       PyQt4
 Requires:       hicolor-icon-theme
+Requires:       kde-filesystem
 
 Recommends:     python2-%{name}
 
@@ -158,6 +159,11 @@ fi
 
 
 %changelog
+* Sat Sep 16 2017 Alexander Ploumistos <alexpl@fedoraproject.org> - 1.21-5
+- Add code and requirements in order to run the provided tests (in local builds)
+- Add kde-filesystem requirement
+- Combine licenses to GPLv3+
+
 * Thu Sep 14 2017 Alexander Ploumistos <alexpl@fedoraproject.org> - 1.21-4
 - Fix another armv7hl issue - patches by Robert-André Mauchin and Miquel Garriga
 - Patch for setting Python paths by Antonio Trande
